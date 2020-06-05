@@ -11,10 +11,10 @@
 
 set -e
 
-readonly NOTES_DIRECTORY="${NOTES_DIRECTORY:-"${HOME}/notes"}"
+readonly NOTES_DIRECTORY="${NOTES_DIRECTORY:-"$HOME/Docs/Notes"}"
 readonly NOTES_EDITOR="${EDITOR}"
 
-readonly NOTES_FILE="$(date +%Y-%m).txt"
+readonly NOTES_FILE="$(date +%Y-%m-%d).txt"
 readonly NOTES_PATH="${NOTES_DIRECTORY}/${NOTES_FILE}"
 
 if [ ! -d "${NOTES_DIRECTORY}" ]; then
@@ -35,5 +35,5 @@ if [ ${#} -eq 0 ]; then
         eval "${NOTES_EDITOR}" "${NOTES_PATH}"
     fi
 else
-    printf "%s\n\n" "${*}" >> "${NOTES_PATH}"
+    echo -e "----------------\n$(date +%H:%M:%S)\n${*}\n----------------\n\n" >> "${NOTES_PATH}"
 fi
