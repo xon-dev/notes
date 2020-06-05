@@ -32,7 +32,7 @@ if [ ${#} -eq 0 ]; then
     if [ -p "/dev/stdin" ]; then
         echo -e "----------------\n$(date +%H:%M:%S)\n" >> "${NOTES_PATH}"
         (cat) >> "${NOTES_PATH}"
-        echo -e "\n\n----------------" >> "${NOTES_PATH}"
+        echo -e "\n----------------" >> "${NOTES_PATH}"
     else
         eval "${NOTES_EDITOR}" "${NOTES_PATH}"
     fi
