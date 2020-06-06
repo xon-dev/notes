@@ -2,9 +2,9 @@
 # Create a dated text file at a specific location and append text to it.
 #
 # Usage:
-#   $ notes something you want to jot down (appends that text to the file)
-#   $ xclip -o | notes                     (appends your clipboard to the file)
-#   $ notes                                (opens the file in your editor)
+#   $ note something you want to jot down (appends that text to the file)
+#   $ xclip -o | note                     (appends your clipboard to the file)
+#   $ note                                (opens the file in your editor)
 #
 # Produces:
 #   YYYY-MM.txt in your $NOTES_DIRECTORY (this is set below).
@@ -14,7 +14,7 @@ set -e
 readonly NOTES_DIRECTORY="${NOTES_DIRECTORY:-"$HOME/Docs/Notes"}"
 readonly NOTES_EDITOR="${EDITOR}"
 
-readonly NOTES_FILE="$(date +%Y-%m-%d).txt"
+readonly NOTES_FILE="$(date +%Y-%m).txt"
 readonly NOTES_PATH="${NOTES_DIRECTORY}/${NOTES_FILE}"
 
 if [ ! -d "${NOTES_DIRECTORY}" ]; then
@@ -30,12 +30,12 @@ fi
 
 if [ ${#} -eq 0 ]; then
     if [ -p "/dev/stdin" ]; then
-        echo -e "----------------\n$(date +%H:%M:%S)\n" >> "${NOTES_PATH}"
-        (cat) >> "${NOTES_PATH}"
-        echo -e "\n----------------" >> "${NOTES_PATH}"
+        echo -e "[$(date +%d\ \-\ %H:%M)]\n" >> "${NOTES_PATH}"
+        (cat;echo -e "\n----------------") >> "${NOTES_PATH}"
     else
         eval "${NOTES_EDITOR}" "${NOTES_PATH}"
     fi
 else
-    echo -e "----------------\n$(date +%H:%M:%S)\n${*}\n\n----------------\n\n" >> "${NOTES_PATH}"
+    echo -e "[$(date +%d\ \-\ %H:%M)]\n\n${*}" >> "${NOTES_PATH}"
+    echo "----------------" >> "${NOTES_PATH}"
 fi
